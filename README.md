@@ -1,3 +1,5 @@
+🎁 This repo is forked from https://github.com/pybpc/walrus for publishing their latest work on PyPi, since the PyPi has not been updated long. Thanks the original authors for their excellent work to support the walrus operator on early Python versions.
+
 # NB: walrus is currently under reconstruction. It is highly recommended to directly install from the git repo or the pre-release distributions.
 
 ---

@@ -17,14 +17,14 @@ version = subprocess.check_output([sys.executable,  # nosec
                                   universal_newlines=True).strip()
 
 setup(
-    name='bpc-walrus',
+    name='george-walrus',
     version=version,
     description='Backport compiler for Python 3.8 assignment expressions.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/pybpc/walrus',
-    author='Jarry Shaw',
-    author_email='jarryshaw@icloud.com',
+    url='https://github.com/george-kuanli-peng/walrus',
+    # author='Jarry Shaw',
+    # author_email='jarryshaw@icloud.com',
     license='MIT',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
