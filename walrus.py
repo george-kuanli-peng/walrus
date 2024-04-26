@@ -276,9 +276,15 @@ tbtrim.set_trim_rule(predicate, strict=True, target=BPCSyntaxError)
 # Main Conversion Implementation
 
 # walrus wrapper template
+
+# NAME_TEMPLATE = '''\
+# if False:
+# %(indentation)s%(name_list)s = NotImplemented
+# '''.splitlines()  # `str.splitlines` will remove trailing newline
+# make it Cython compilable
 NAME_TEMPLATE = '''\
-if False:
-%(indentation)s%(name_list)s = NotImplemented
+if '%(name)s' not in dir():
+%(indentation)s%(name)s = NotImplemented
 '''.splitlines()  # `str.splitlines` will remove trailing newline
 CALL_TEMPLATE = '_walrus_wrapper_%(name)s_%(uuid)s(%(expr)s)'
 FUNC_TEMPLATE = '''\
@@ -1017,10 +1023,10 @@ class Context(BaseContext):
         else:
             linesep = ''
         if self._vars:
-            name_list = ' = '.join(sorted(set(self._vars)))
-            self._buffer += indent + (
-                '%s%s' % (self._linesep, indent)
-            ).join(NAME_TEMPLATE) % dict(indentation=self._indentation, name_list=name_list) + self._linesep
+            for name in sorted(set(self._vars)):
+                self._buffer += indent + (
+                    '%s%s' % (self._linesep, indent)
+                ).join(NAME_TEMPLATE) % dict(indentation=self._indentation, name=name) + self._linesep
         for func in sorted(self._func, key=lambda func: func['name']):
             if self._buffer:
                 self._buffer += linesep
@@ -1205,10 +1211,10 @@ class LambdaContext(Context):
         else:
             linesep = ''
         if self._vars:
-            name_list = ' = '.join(sorted(set(self._vars)))
-            self._buffer += indent + (
-                '%s%s' % (self._linesep, indent)
-            ).join(NAME_TEMPLATE) % dict(indentation=self._indentation, name_list=name_list) + self._linesep
+            for name in sorted(set(self._vars)):
+                self._buffer += indent + (
+                    '%s%s' % (self._linesep, indent)
+                ).join(NAME_TEMPLATE) % dict(indentation=self._indentation, name=name) + self._linesep
         for func in sorted(self._func, key=lambda func: func['name']):
             if self._buffer:
                 self._buffer += linesep
