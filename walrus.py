@@ -1023,10 +1023,6 @@ class Context(BaseContext):
         else:
             linesep = ''
         if self._vars:
-            # name_list = ' = '.join(sorted(set(self._vars)))
-            # self._buffer += indent + (
-            #     '%s%s' % (self._linesep, indent)
-            # ).join(NAME_TEMPLATE) % dict(indentation=self._indentation, name_list=name_list) + self._linesep
             for name in sorted(set(self._vars)):
                 self._buffer += indent + (
                     '%s%s' % (self._linesep, indent)
@@ -1215,10 +1211,10 @@ class LambdaContext(Context):
         else:
             linesep = ''
         if self._vars:
-            name_list = ' = '.join(sorted(set(self._vars)))
-            self._buffer += indent + (
-                '%s%s' % (self._linesep, indent)
-            ).join(NAME_TEMPLATE) % dict(indentation=self._indentation, name_list=name_list) + self._linesep
+            for name in sorted(set(self._vars)):
+                self._buffer += indent + (
+                    '%s%s' % (self._linesep, indent)
+                ).join(NAME_TEMPLATE) % dict(indentation=self._indentation, name=name) + self._linesep
         for func in sorted(self._func, key=lambda func: func['name']):
             if self._buffer:
                 self._buffer += linesep
